@@ -1,35 +1,14 @@
 import { Userworkitem } from "@/components/workshop/card";
 import Link from "next/link";
-
-interface Workshop {
-  _id: string;
-  name: string;
-  description: string;
-  imageUrl: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-async function getWorkshops(): Promise<Workshop[]> {
-  try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-    const response = await fetch(`${baseUrl}/api/workshop`, {
-      next: { revalidate: 60 }, // Cache 60 วินาที
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch workshops");
-    }
-
-    return response.json();
-  } catch (error) {
-    console.error("Error fetching workshops:", error);
-    return [];
-  }
-}
+import { getWorkshops, type WorkshopItem } from "@/lib/workshop";
 
 export default async function WorkshopPage() {
-  const workshops = await getWorkshops();
+  let workshops: WorkshopItem[] = [];
+  try {
+    workshops = await getWorkshops();
+  } catch (error) {
+    console.error("Error fetching workshops:", error);
+  }
 
   return (
     <div className="min-h-screen bg-background">

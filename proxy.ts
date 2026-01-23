@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 
 const SECRET = process.env.ADMIN_SESSION_SECRET;
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   if (!pathname.startsWith("/admin")) {

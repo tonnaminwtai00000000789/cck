@@ -3,15 +3,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Calendar } from "lucide-react";
 import { CopyLinkButton } from "@/components/workshop/CopyLinkButton";
-
-interface Workshop {
-  _id: string;
-  name: string;
-  description: string;
-  imageUrl: string;
-  createdAt: string;
-  updatedAt: string;
-}
+import { getWorkshopById } from "@/lib/workshop";
 
 interface PageProps {
   params: Promise<{
@@ -19,30 +11,9 @@ interface PageProps {
   }>;
 }
 
-async function getWorkshop(id: string): Promise<Workshop | null> {
-  try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-    const response = await fetch(`${baseUrl}/api/workshop/${id}`, {
-      next: { revalidate: 60 }, // Cache 60 วินาที
-    });
-
-    if (!response.ok) {
-      if (response.status === 404) {
-        return null;
-      }
-      throw new Error("Failed to fetch workshop");
-    }
-
-    return response.json();
-  } catch (error) {
-    console.error("Error fetching workshop:", error);
-    return null;
-  }
-}
-
 export default async function WorkshopDetailPage({ params }: PageProps) {
   const { id } = await params;
-  const workshop = await getWorkshop(id);
+  const workshop = await getWorkshopById(id);
 
   if (!workshop) {
     notFound();
