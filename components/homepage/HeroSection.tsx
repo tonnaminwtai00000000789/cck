@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -22,15 +23,18 @@ export default function HeroSection() {
             {heroImages.map((img, index) => (
                 <div
                     key={index}
-                    className={`absolute inset-0 ${index === currentSlide ? 'opacity-100' : 'opacity-0'
-                        }`}
-                    style={{
-                        backgroundImage: `url(${img})`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                    }}
+                    className={`absolute inset-0 transition-opacity duration-500 ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}
                 >
-                    <div className="absolute inset-0 bg-linear-to-r from-black/50 to-black/30"></div>
+                    <Image
+                        src={img}
+                        alt={`Hero slide ${index + 1}`}
+                        fill
+                        sizes="100vw"
+                        className="object-cover"
+                        priority={index === 0}
+                        loading={index === 0 ? 'eager' : 'lazy'}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-black/30"></div>
                 </div>
             ))}
             <div className="relative z-20 h-full flex items-center px-4 pt-32">
@@ -65,17 +69,6 @@ export default function HeroSection() {
                     />
                 ))}
             </div>
-
-            <style>{`
-        @keyframes swing {
-          0%, 100% {
-            transform: rotate(-3deg);
-          }
-          50% {
-            transform: rotate(3deg);
-          }
-        }
-      `}</style>
         </div>
     );
 }

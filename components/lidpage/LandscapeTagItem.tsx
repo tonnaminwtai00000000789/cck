@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface LandscapeTagItemProps {
@@ -19,21 +20,27 @@ export function LandscapeTagItem({
         rounded-xl
         w-full 
         max-w-md 
+        !py-0 !gap-0
         ${className}
       `}
     >
-      <CardHeader className="pb-2 text-black bg-white">
+      <CardHeader className="!py-4 text-black bg-white">
         <CardTitle className="text-xl md:text-2xl font-bold tracking-wide text-center">
           {title}
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="p-0">
-        <img
-          src={imageUrl}
-          alt={title}
-          className="w-full h-64 object-cover"  // ความสูงคงที่เพื่อให้ดู balance เมื่อวางคู่กัน
-        />
+      <CardContent className="!p-0">
+        <div className="relative w-full h-64">
+          <Image
+            src={imageUrl}
+            alt={title}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            className="object-cover"
+            loading="lazy"
+          />
+        </div>
       </CardContent>
     </Card>
   );

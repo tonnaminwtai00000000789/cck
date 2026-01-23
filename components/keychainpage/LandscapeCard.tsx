@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 
 interface LandscapeCardProps {
@@ -17,18 +18,22 @@ export function LandscapeCard({ title, imageUrl, features }: LandscapeCardProps)
         shadow-lg hover:shadow-2xl
         transition-all duration-300
         w-full max-w-2xl
+        !py-0 !gap-0
       "
     >
       {/* รูปภาพ */}
       <div className="relative aspect-video overflow-hidden">
-        <img
+        <Image
           src={imageUrl}
           alt={title}
-          className="w-full h-full object-cover"
+          fill
+          sizes="(max-width: 768px) 100vw, 672px"
+          className="object-cover"
+          loading="lazy"
         />
       </div>
 
-      <CardContent className="p-8 space-y-5">
+      <CardContent className="!p-8 space-y-5">
         <h3 className="text-3xl font-bold text-gray-900">
           {title}
         </h3>

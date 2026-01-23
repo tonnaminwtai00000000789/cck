@@ -29,6 +29,23 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
+## Docker Compose
+
+รันแอปกับ MongoDB ด้วย Docker:
+
+```bash
+# สร้าง .env จาก .env.example แล้วกำหนด ADMIN_SESSION_SECRET
+cp .env.example .env
+
+# Build และรัน
+docker compose up -d
+```
+
+- แอป: http://localhost:3000  
+- MongoDB: localhost:27017 (ข้อมูลเก็บใน volume `mongodb_data`)
+
+ตัวแปรใน `.env` ที่ใช้กับ Docker: `ADMIN_USERNAME`, `ADMIN_PASSWORD`, `ADMIN_SESSION_SECRET`, `NEXT_PUBLIC_BASE_URL` (ตัวที่เหลือเช่น `MONGODB_URI` ถูกตั้งใน `docker-compose.yml` แล้ว)
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
