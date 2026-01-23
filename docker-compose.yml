@@ -1,23 +1,26 @@
 services:
-  app:
+  web:
     build:
       context: .
       dockerfile: Dockerfile
       args:
-        NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL:-http://localhost:3000}
+        NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL:-https://cck.theijon.online}
+        MONGODB_URI: ${MONGODB_URI:-mongodb://mongodb:27017/cck}
     ports:
-      - "3000:3000"
+      - "5430:3000"
+    env_file:
+      - .env.local
     environment:
-      MONGODB_URI: mongodb://mongodb:27017/cck
+      MONGODB_URI: ${MONGODB_URI:-mongodb://mongodb:27017/cck}
       NODE_ENV: production
       ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD:-changeme}
-      ADMIN_SESSION_SECRET: ${ADMIN_SESSION_SECRET}
-      NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL:-http://localhost:3000}
+      ADMIN_SESSION_SECRET: ${ADMIN_SESSION_SECRET:-changeme-secret}
+      NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL:-https://cck.theijon.online}
     depends_on:
       mongodb:
         condition: service_healthy
-    restart: unless-stopped
+    restart: always
 
   mongodb:
     image: mongo:7
@@ -30,7 +33,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-    restart: unless-stopped
+    restart: always
 
 volumes:
   mongodb_data:
