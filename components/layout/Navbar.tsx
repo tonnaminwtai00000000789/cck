@@ -14,7 +14,7 @@ export default function Navbar() {
   const navLinks = [
     { path: '/', label: 'หน้าแรก' },
     { path: '/keychain', label: 'ไอเดียพวงกุญแจ' },
-    { path: '/lid', label: 'วิธีทำฝาขวดน้ำ' },
+    { path: '/howto', label: 'วิธีทำฝาขวดน้ำ' },
     { path: '/workshop', label: 'ผลงานของผู้ใช้' },
   ];
 
@@ -34,29 +34,28 @@ export default function Navbar() {
               height={56}
               className="object-contain transition-transform duration-300 group-hover:scale-105"
             />
-            <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+            <span className="text-xl sm:text-2xl font-bold bg-linear-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
               ถังขยะรักโลก : DIY
             </span>
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-2">
+         <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 href={link.path}
-                className="relative px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:text-emerald-600 "
+                className={`
+                  relative font-medium text-gray-700 transition-all duration-300
+                  hover:text-emerald-600
+                  after:absolute after:-bottom-1.5 after:left-0 after:h-0.5 after:bg-emerald-500
+                  after:transition-all after:duration-300
+                  ${isActive(link.path)
+                    ? 'text-emerald-600 after:w-full'
+                    : 'after:w-0 hover:after:w-full'}
+                `}
               >
                 {link.label}
-                <span
-                  className={`
-                    absolute left-1/2 -bottom-1 h-[2px] bg-emerald-500
-                    transition-all duration-300
-                    ${isActive(link.path)
-                      ? 'w-6 -translate-x-1/2'
-                      : 'w-0 -translate-x-1/2 group-hover:w-6 '}
-                  `}
-                />
               </Link>
             ))}
           </div>
@@ -92,7 +91,7 @@ export default function Navbar() {
                 block rounded-xl px-4 py-3 text-sm font-medium transition-all
                 ${isActive(link.path)
                   ? 'bg-emerald-50 text-emerald-700'
-                  : 'text-gray-700 hover:bg-emerald-50/60 hover:text-emerald-600 hover:text-black'}
+                  : 'text-gray-700 hover:bg-emerald-50/60 hover:text-emerald-600'}
               `}
             >
               {link.label}

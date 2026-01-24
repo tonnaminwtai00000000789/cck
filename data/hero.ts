@@ -7,5 +7,5 @@ export const heroImages = [
 export const heroContent = {
     title: 'เปลี่ยนฝาขวดน้ำเป็น\nพวงกุญแจสุดเก๋',
     description: 'ชุบชีวิตขยะเหลือใช้ สร้างสรรค์นวัตกรรม DIY ด้วยมือคุณเอง',
-    buttonText: 'ถังขยะรักโลก',
+    buttonText: 'ไอเดียพวงกุญแจ',
 };

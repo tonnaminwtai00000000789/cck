@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowLeft, Upload, ImageIcon, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 export default function AddToGalleryPage() {
   const router = useRouter();
@@ -20,6 +21,11 @@ export default function AddToGalleryPage() {
   const [error, setError] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
 
+  // Set page title
+  useEffect(() => {
+    document.title = "เพิ่มผลงานใหม่ | ถังขยะรักโลก : DIY";
+  }, []);
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
@@ -29,6 +35,7 @@ export default function AddToGalleryPage() {
 
   const processFile = (selectedFile: File) => {
     if (!selectedFile.type.startsWith("image/")) {
+      toast.error("กรุณาเลือกไฟล์รูปภาพเท่านั้น");
       setError("กรุณาเลือกไฟล์รูปภาพเท่านั้น");
       return;
     }
@@ -62,14 +69,17 @@ export default function AddToGalleryPage() {
     setError(null);
 
     if (!name.trim()) {
+      toast.error("กรุณากรอกชื่อผลงาน");
       setError("กรุณากรอกชื่อผลงาน");
       return;
     }
     if (!description.trim()) {
+      toast.error("กรุณากรอกคำอธิบาย");
       setError("กรุณากรอกคำอธิบาย");
       return;
     }
     if (!file) {
+      toast.error("กรุณาเลือกรูปภาพ");
       setError("กรุณาเลือกรูปภาพ");
       return;
     }
@@ -88,6 +98,7 @@ export default function AddToGalleryPage() {
       const uploadResult = await uploadResponse.json();
 
       if (!uploadResponse.ok) {
+        toast.error(uploadResult.error || "อัพโหลดรูปภาพไม่สำเร็จ");
         throw new Error(uploadResult.error || "อัพโหลดรูปภาพไม่สำเร็จ");
       }
 
@@ -106,14 +117,18 @@ export default function AddToGalleryPage() {
       const workshopResult = await workshopResponse.json();
 
       if (!workshopResponse.ok) {
+        toast.error(workshopResult.error || "บันทึกผลงานไม่สำเร็จ");
         throw new Error(workshopResult.error || "บันทึกผลงานไม่สำเร็จ");
       }
+
 
       router.push("/workshop");
       router.refresh();
     } catch (err) {
+      toast.error(err instanceof Error ? err.message : "เกิดข้อผิดพลาด");
       setError(err instanceof Error ? err.message : "เกิดข้อผิดพลาด");
     } finally {
+      toast.success("เพิ่มผลงานสำเร็จ!");
       setIsLoading(false);
     }
   };
@@ -147,7 +162,7 @@ export default function AddToGalleryPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {error && (
               <div className="flex items-center gap-3 p-4 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
-                <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 {error}

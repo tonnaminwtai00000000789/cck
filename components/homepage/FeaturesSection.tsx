@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
+import Link from 'next/link';
 
 export default function FeaturesSection() {
     return (
@@ -7,11 +8,12 @@ export default function FeaturesSection() {
             <div className="grid md:grid-cols-3 gap-8">
                 <div className="text-center">
                     <h3 className="text-2xl font-semibold mb-6">ไอเดียพวงกุญแจ DIY</h3>
-                    <Card className="overflow-hidden hover:shadow-xl transition-shadow !py-0 !gap-0">
-                        <CardContent className="!p-0">
+                    <Link href="/keychain">
+                    <Card className="overflow-hidden hover:shadow-xl transition-shadow py-0! gap-0!">
+                        <CardContent className="p-0!">
                             <div className="relative w-full h-80">
                                 <Image
-                                    src="https://placehold.co/500x400?text=item1"
+                                    src="/image/keychain-ideas/2.png"
                                     alt="materials"
                                     fill
                                     sizes="(max-width: 768px) 100vw, 33vw"
@@ -21,15 +23,18 @@ export default function FeaturesSection() {
                             </div>
                         </CardContent>
                     </Card>
+                    </Link>
                 </div>
+
 
                 <div className="text-center">
                     <h3 className="text-2xl font-semibold mb-6">วิธีการทำฝาขวดน้ำ</h3>
-                    <Card className="overflow-hidden hover:shadow-xl transition-shadow !py-0 !gap-0">
-                        <CardContent className="!p-0">
+                    <Link href="/howto">
+                    <Card className="overflow-hidden hover:shadow-xl transition-shadow py-0! gap-0!">
+                        <CardContent className="p-0!">
                             <div className="relative w-full h-80">
                                 <Image
-                                    src="https://placehold.co/500x400?text=item2"
+                                    src="/image/howto.png"
                                     alt="gallery"
                                     fill
                                     sizes="(max-width: 768px) 100vw, 33vw"
@@ -39,15 +44,17 @@ export default function FeaturesSection() {
                             </div>
                         </CardContent>
                     </Card>
+                    </Link>
                 </div>
 
                 <div className="text-center">
-                    <h3 className="text-2xl font-semibold mb-6">item3</h3>
-                    <Card className="overflow-hidden hover:shadow-xl transition-shadow !py-0 !gap-0">
-                        <CardContent className="!p-0">
+                    <h3 className="text-2xl font-semibold mb-6">ผลงานของผู้ใช้</h3>
+                    <Link href="/workshop">
+                    <Card className="overflow-hidden hover:shadow-xl transition-shadow py-0! gap-0!">
+                        <CardContent className="p-0!">
                             <div className="relative w-full h-80">
                                 <Image
-                                    src="https://placehold.co/500x400?text=item3"
+                                    src="/image/donthave.png"
                                     alt="gallery"
                                     fill
                                     sizes="(max-width: 768px) 100vw, 33vw"
@@ -57,6 +64,7 @@ export default function FeaturesSection() {
                             </div>
                         </CardContent>
                     </Card>
+                    </Link>
                 </div>
             </div>
         </div>

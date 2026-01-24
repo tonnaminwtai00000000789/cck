@@ -17,23 +17,4 @@ services:
       ADMIN_PASSWORD: ${ADMIN_PASSWORD:-changeme}
       ADMIN_SESSION_SECRET: ${ADMIN_SESSION_SECRET:-changeme-secret}
       NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL:-https://cck.theijon.online}
-    depends_on:
-      mongodb:
-        condition: service_healthy
     restart: always
-
-  mongodb:
-    image: mongo:7
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongodb_data:/data/db
-    healthcheck:
-      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-    restart: always
-
-volumes:
-  mongodb_data:

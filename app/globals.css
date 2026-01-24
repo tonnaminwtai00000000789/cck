@@ -115,11 +115,6 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
-/* Page transition: fade เฉพาะ main; navbar และ footer อยู่ที่ root → ไม่ animate */
-.main-transition {
-  view-transition-name: main-content;
-}
-
 @keyframes fade-out {
   to {
     opacity: 0;
@@ -144,12 +139,12 @@
   animation: stay-opaque 0.5s linear forwards;
 }
 
-/* main content fade: ใช้เวลานานขึ้น + easing นุ่ม (ease-in-out แบบนิ่ม) */
-::view-transition-old(main-content) {
+/* React <ViewTransition default="main-fade">: fade เฉพาะ main */
+::view-transition-old(.main-fade) {
   animation: fade-out 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
 }
 
-::view-transition-new(main-content) {
+::view-transition-new(.main-fade) {
   animation: fade-in 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
 }
 

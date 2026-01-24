@@ -1,6 +1,11 @@
 import { Userworkitem } from "@/components/workshop/card";
 import Link from "next/link";
 import { getWorkshops, type WorkshopItem } from "@/lib/workshop";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "ผลงานของผู้ใช้ | ถังขยะรักโลก : DIY",
+};
 
 export default async function WorkshopPage() {
   let workshops: WorkshopItem[] = [];

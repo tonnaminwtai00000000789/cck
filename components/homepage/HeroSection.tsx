@@ -3,9 +3,9 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { heroImages, heroContent } from '@/data';
+import { Lightbulb } from 'lucide-react';
 
 export default function HeroSection() {
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -34,7 +34,7 @@ export default function HeroSection() {
                         priority={index === 0}
                         loading={index === 0 ? 'eager' : 'lazy'}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-black/30"></div>
+                    <div className="absolute inset-0 bg-linear-to-r from-black/50 to-black/30"></div>
                 </div>
             ))}
             <div className="relative z-20 h-full flex items-center px-4 pt-32">
@@ -47,10 +47,10 @@ export default function HeroSection() {
                             {heroContent.description}
                         </p>
                         <Button
-                            onClick={() => router.push('/lid')}
+                            onClick={() => router.push('/keychain')}
                             className="bg-green-600 hover:bg-green-700 text-white font-semibold px-8 py-6 text-lg rounded-full shadow-xl cursor-pointer flex items-center transition-transform hover:scale-105"
                         >
-                            <Check className="w-6 h-6 mr-2" />
+                            <Lightbulb className="w-6 h-6 mr-3" />
                             {heroContent.buttonText}
                         </Button>
                     </div>

@@ -40,7 +40,7 @@ export function LandscapeCard({ title, imageUrl, features }: LandscapeCardProps)
 
         <div>
           <p className="font-semibold text-gray-700 mb-3">
-            ข้อมูล
+            วิธี:
           </p>
           <ul className="list-disc list-inside space-y-2 text-gray-600">
             {features.map((item, index) => (

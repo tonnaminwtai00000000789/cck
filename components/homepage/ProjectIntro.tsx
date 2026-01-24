@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import Link from 'next/link';
+
 export default function ProjectIntro() {
     return (
         <div className="bg-linear-to-b from-green-50 to-white py-16">
@@ -27,15 +29,22 @@ export default function ProjectIntro() {
 
                 {/* Tags */}
                 <div className="flex flex-wrap justify-center gap-4">
-                    <div className="bg-white px-6 py-3 rounded-full shadow-md font-semibold">
+                    <Link href="/keychain">
+                    <div className="bg-white px-6 py-3 rounded-full shadow-md font-semibold hover:bg-emerald-50 transition">
                         ไอเดียพวงกุญแจ DIY
                     </div>
-                    <div className="bg-white px-6 py-3 rounded-full shadow-md font-semibold">
-                        วิธีการทำฝาขวดน้ำ
+                    </Link>
+
+                            <Link href="/howto">
+                                <div className="bg-white px-6 py-3 rounded-full shadow-md font-semibold hover:bg-emerald-50 transition">
+                                    วิธีการทำฝาขวดน้ำ
+                                </div>
+                            </Link>
+                    <Link href="/workshop">
+                    <div className="bg-white px-6 py-3 rounded-full shadow-md font-semibold hover:bg-emerald-50 transition">
+                        ผลงานของผู้ใช้
                     </div>
-                    <div className="bg-white px-6 py-3 rounded-full shadow-md font-semibold">
-                        item3
-                    </div>
+                    </Link>
                 </div>
             </div>
         </div>

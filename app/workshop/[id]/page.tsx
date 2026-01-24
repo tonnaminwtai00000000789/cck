@@ -4,11 +4,49 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, Calendar } from "lucide-react";
 import { CopyLinkButton } from "@/components/workshop/CopyLinkButton";
 import { getWorkshopById } from "@/lib/workshop";
+import type { Metadata } from "next";
 
 interface PageProps {
   params: Promise<{
     id: string;
   }>;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { id } = await params;
+  const workshop = await getWorkshopById(id);
+
+  if (!workshop) {
+    return {
+      title: "ไม่พบผลงาน | ถังขยะรักโลก : DIY"
+    };
+  }
+
+  return {
+    title: `${workshop.name} | ถังขยะรักโลก : DIY`,
+    description: workshop.description,
+    openGraph: {
+      title: `${workshop.name} | ถังขยะรักโลก : DIY`,
+      description: workshop.description,
+      images: [
+        {
+          url: workshop.imageUrl,
+          width: 1200,
+          height: 630,
+          alt: workshop.name,
+        }
+      ],
+      type: 'article',
+      locale: 'th_TH',
+      siteName: 'ถังขยะรักโลก : DIY',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${workshop.name} | ถังขยะรักโลก : DIY`,
+      description: workshop.description,
+      images: [workshop.imageUrl],
+    },
+  };
 }
 
 export default async function WorkshopDetailPage({ params }: PageProps) {

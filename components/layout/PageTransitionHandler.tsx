@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { startTransition, useEffect } from "react";
 
 export function PageTransitionHandler() {
   const router = useRouter();
@@ -25,18 +25,10 @@ export function PageTransitionHandler() {
       if (!href || href === pathname) return;
 
       e.preventDefault();
-
-      if (typeof document !== "undefined" && "startViewTransition" in document) {
-        const vt = (document as Document & {
-          startViewTransition: (cb: () => Promise<void>) => { finished: Promise<void> };
-        }).startViewTransition(() => {
-          window.scrollTo(0, 0);
-          return router.push(href);
-        });
-      } else {
-        window.scrollTo(0, 0);
+      window.scrollTo(0, 0);
+      startTransition(() => {
         router.push(href);
-      }
+      });
     };
 
     document.addEventListener("click", handleClick, true);
