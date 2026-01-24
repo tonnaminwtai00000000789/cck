@@ -1,20 +1,42 @@
 services:
+  mongodb:
+    image: mongo:latest
+    container_name: cck-mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:-mongodb}
+      MONGO_INITDB_DATABASE: cck
+    volumes:
+      - mongodb_data:/data/db
+    restart: always
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   web:
     build:
       context: .
       dockerfile: Dockerfile
       args:
         NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL:-https://cck.theijon.online}
-        MONGODB_URI: ${MONGODB_URI:-mongodb://mongodb:27017/cck}
+        MONGODB_URI: ${MONGODB_URI:-mongodb://admin:mongodb@mongodb:27017/cck?authSource=admin}
     ports:
       - "5430:3000"
     env_file:
       - .env.local
     environment:
-      MONGODB_URI: ${MONGODB_URI:-mongodb://mongodb:27017/cck}
+      MONGODB_URI: ${MONGODB_URI:-mongodb://admin:mongodb@mongodb:27017/cck?authSource=admin}
       NODE_ENV: production
       ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD:-changeme}
       ADMIN_SESSION_SECRET: ${ADMIN_SESSION_SECRET:-changeme-secret}
       NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL:-https://cck.theijon.online}
+    depends_on:
+      mongodb:
+        condition: service_healthy
     restart: always
+
+volumes:
+  mongodb_data:
