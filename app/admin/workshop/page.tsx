@@ -50,17 +50,23 @@ export default function AdminWorkshopPage() {
   }, []);
 
   const handleDelete = async (id: string) => {
+    // Optimistic Update
+    const previousWorkshops = [...workshops];
+    setWorkshops((prev) => prev.filter((w) => w._id !== id));
+    setConfirmId(null);
     setDeletingId(id);
+
     try {
       const res = await fetch(`/api/workshop/${id}`, { method: "DELETE" });
-      if (res.ok) {
-        setWorkshops((prev) => prev.filter((w) => w._id !== id));
-        setConfirmId(null);
-      } else {
+      if (!res.ok) {
+        // Rollback on error
+        setWorkshops(previousWorkshops);
         const json = await res.json().catch(() => ({}));
         alert(json.error || "ลบไม่สำเร็จ");
       }
     } catch (e) {
+      // Rollback on error
+      setWorkshops(previousWorkshops);
       alert("เกิดข้อผิดพลาด");
     } finally {
       setDeletingId(null);

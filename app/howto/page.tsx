@@ -5,11 +5,6 @@ export const metadata: Metadata = {
   title: "วิธีการทำพวงกุญแจจากฝาขวดน้ำ | ถังขยะรักโลก : DIY",
 };
 
-const card = {
-  title: "title example",
-  imageUrl: "https://placehold.co/800x450/",
-  features: ["ex1", "ex2", "ex3", "ex4"],
-};
 
 export default function KeychainPage() {
   return (

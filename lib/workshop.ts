@@ -38,13 +38,13 @@ async function getWorkshopByIdUncached(id: string): Promise<WorkshopItem | null>
 export const getWorkshops = unstable_cache(
   getWorkshopsUncached,
   ["workshops-list"],
-  { revalidate: 60 }
+  { revalidate: 60, tags: ["workshops-list"] }
 );
 
 export function getWorkshopById(id: string): Promise<WorkshopItem | null> {
   return unstable_cache(
     () => getWorkshopByIdUncached(id),
     ["workshop", id],
-    { revalidate: 60 }
+    { revalidate: 60, tags: ["workshops-list", `workshop-${id}`] }
   )();
 }

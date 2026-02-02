@@ -39,9 +39,9 @@ export function LandscapeCard({ title, imageUrl, features }: LandscapeCardProps)
         </h3>
 
         <div>
-          <p className="font-semibold text-gray-700 mb-3">
+          {/* <p className="font-semibold text-gray-700 mb-3">
             วิธี:
-          </p>
+          </p> */}
           <ul className="list-disc list-inside space-y-2 text-gray-600">
             {features.map((item, index) => (
               <li key={index} className="text-base">

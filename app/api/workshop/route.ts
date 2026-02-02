@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidateTag } from "next/cache";
 import dbConnect from "@/lib/mongodb";
 import Workshop from "@/models/Workshop";
 
@@ -43,10 +44,11 @@ export async function POST(request: NextRequest) {
       imageUrl,
     });
 
+    revalidateTag("workshops-list", "default");
     return NextResponse.json(workshop, { status: 201 });
   } catch (error) {
     console.error("Error creating workshop:", error);
-    
+
     // Handle Mongoose validation errors
     if (error instanceof Error && error.name === "ValidationError") {
       return NextResponse.json(

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidateTag } from "next/cache";
 import dbConnect from "@/lib/mongodb";
 import Workshop from "@/models/Workshop";
 import mongoose from "mongoose";
@@ -85,6 +86,8 @@ export async function PATCH(request: NextRequest, { params }: Params) {
       );
     }
 
+    revalidateTag("workshops-list", "default");
+    revalidateTag(`workshop-${id}`, "default");
     return NextResponse.json(workshop);
   } catch (error) {
     console.error("Error updating workshop:", error);
@@ -122,6 +125,7 @@ export async function DELETE(request: NextRequest, { params }: Params) {
       );
     }
 
+    revalidateTag("workshops-list", "default");
     return NextResponse.json({ message: "ลบผลงานสำเร็จ" });
   } catch (error) {
     console.error("Error deleting workshop:", error);
